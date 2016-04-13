@@ -142,6 +142,14 @@ var yAxis = d3.svg.axis()
 var line = d3.svg.line()
     .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.average_faculty); });
+
+var line2 = d3.svg.line()
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return y(d.median_faculty); });
+    
+var line3 = d3.svg.line()
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return y(d.athletic_director); });
     
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -157,9 +165,9 @@ d3.json("salary_data.json", function(error, data) {
         for(var i in d) {
             d[i] = Number(d[i].replace(/[^0-9\.]+/g,""));
         }
-    })
-  x.domain(d3.extent(data, function(d) { return d.year; }));
-  y.domain(d3.extent(data, function(d) { return d.average_faculty; }));
+    });
+  x.domain(d3.extent(data, function(d) { return +d.year; }));
+  y.domain(d3.extent([0, d3.max(data, function(d) { return +d.athletic_director; })]));
 
   svg.append("g")
       .attr("class", "x axis")
@@ -187,6 +195,15 @@ d3.json("salary_data.json", function(error, data) {
       .datum(data)
       .attr("class", "line")
       .attr("d", line);
+  
+  svg.append("path")      // Add the valueline2 path.
+        .attr("class", "line")
+        .style("stroke", "green")
+        .attr("d", line2(data));
+  svg.append("path")      // Add the valueline2 path.
+        .attr("class", "line")
+        .style("stroke", "red")
+        .attr("d", line3(data));
 });
 
 
