@@ -85,11 +85,23 @@ function change() {
         }
     });
     
-    console.log($("#menu").val());
+    var menuThing = document.getElementById("menuSelector");
+    
+    //menuThing.selectedIndex will return the current selected index of the options
+    
+    console.log( menuThing.options[menuThing.selectedIndex].value);
+    console.log(menuSelector);
     
 //sets x and y axis
   x.domain(d3.extent(data, function(d) { return +d.year; }));
-  y.domain(d3.extent([0, d3.max(data, function(d) { return $("#menu").val(); } )]));
+  y.domain(d3.extent([0, d3.max(data, function(d) { d[$( "menuSelector option:selected" ).text()];  } )]));
+        /*for (i in menuThing) {
+            if (i === menuThing.options) {
+                console.log(i);
+            return  d[menuThing.options[menuThing.selectedIndex].value];
+            }
+        };
+      } )]));*/
 
   
 //label for x axis
