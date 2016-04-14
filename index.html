@@ -3,12 +3,19 @@
         <head>
             <link rel="stylesheet" type="text/css" href="style.css" />
             <script src="https://d3js.org/d3.v3.min.js" charset="utf-9"></script>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
             
         </head>
         <body>
             <h3>D3 Ajax Request</h3>
             
-            
+            <p id="menu" class="menuchoice">Select series:
+                <select>
+                    <option value="athletic_director">View All</option>
+                    <option value="average_faculty">View Faculty Salaries</option>
+                    <option value="out_state_tuition">View Tuition</option>
+                </select>
+            </p>
             <div class="container"></div>
             
             <script src="app.js"></script>
