@@ -2,7 +2,10 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-//make an empty variable to stash the last values into so i can sort the legend
+var parseDate = d3.time.format("%d-%b-%y").parse,
+    bisectDate = d3.bisector(function(d) { return d.year; }).left,
+    formatValue = d3.format(",.2f"),
+    formatCurrency = function(d) { return "$" + formatValue(d); };
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -75,6 +78,13 @@ d3.json("salary_data.json", function(error, data) {
         }
     });
     
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+      return "<strong>Out of State Tuition:</strong> <span style='color:red'>" + data.out_state_tuition + "</span>";
+  })
+    
     var menuThing = document.getElementById("menuSelector");
     
     function menuSelect(value) {
@@ -123,33 +133,7 @@ d3.json("salary_data.json", function(error, data) {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Price ($)");
-      /*
-      // Vertical grid
-      svg.append("g")
-        .insert("g", ".line")         
-        .attr("class", "grid vertical")
-        .attr("transform", "translate(0," + (height-margin.top-margin.bottom)  + ")")
-        .call(d3.svg.axis().scale(xAxis)
-            .orient("bottom")
-            .tickSize(-(height-margin.top-margin.bottom), 0, 0)
-            .tickFormat("")
-        );
-        
-        svg.append("g")
-        .select(".x.axis.zero")
-        .attr("transform", "translate(0," + Y0() + ")")
-        .call(xAxis.tickFormat("").tickSize(0));
-        
-      // Horizontal grid
-      svg.append("g")
-        .insert("g", ".line")         
-        .attr("class", "grid horizontal")
-        .call(d3.svg.axis().scale(yAxis)
-            .orient("left")
-            .tickSize(-(height-margin.top-margin.bottom), 0, 0)
-            .tickFormat("")
-    );
-*/
+      
 //path for first line graph
   svg.append("path")
       .datum(data)
@@ -171,10 +155,11 @@ d3.json("salary_data.json", function(error, data) {
         .style("stroke", "blue")
         .attr("d", line4(data));
         
+        
   svg.append("path")      // Add the line5 path.
         .attr("class", "line")
         .style("stroke", "green")
-        .attr("d", line5(data));
+        .attr("d", line5(data))
         
   // Add the scatterplot
     svg.selectAll("dot")
@@ -211,6 +196,38 @@ d3.json("salary_data.json", function(error, data) {
         .attr("r", 3.5)
         .attr("cx", function(d) { return x(d.year); })
         .attr("cy", function(d) { return y(d.out_state_tuition); });
+        
+        // mouseover
+        var focus = svg.append("g")
+            .attr("class", "focus")
+            .style("display", "none");
+      
+        focus.append("circle")
+            .attr("r", 4.5);
+      
+        focus.append("text")
+            .attr("x", 9)
+            .attr("dy", ".35em")
+            .style("fill", "gray");
+      
+        svg.append("rect")
+            .attr("class", "overlay")
+            .attr("width", width)
+            .attr("height", height)
+            .on("mouseover", function() { focus.style("display", null); })
+            .on("mouseout", function() { focus.style("display", "none"); })
+            .on("mousemove", mousemove1);
+      
+        function mousemove1() {
+          var x0 = x.invert(d3.mouse(this)[0]),
+              i = bisectDate(data, x0, 1),
+              d0 = data[i - 1],
+              d1 = data[i],
+              d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+          focus.attr("transform", "translate(" + x(d.year) + "," + y(d.out_state_tuition) + ")");
+          focus.select("text").text(d.out_state_tuition);
+  }
+    
 });
 
 
