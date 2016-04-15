@@ -1,13 +1,17 @@
 body{
   background-color: #7BAFD4;
 }
+h3 {
+  font-size: 30px;
+}
 .container {
   background-color: #C1D0DB;
   padding-left: 40px;
+  padding-bottom: 40px;
   margin-top: 20px;
 }
 text {
-  font: 13px sans-serif;
+  font: 13px lato;
 }
 
 .axis path,
@@ -54,5 +58,30 @@ circle {
   stroke: steelblue;
 }
 
+.logo {
+  width: 150px;
+  height: auto;
+}
 
+.info{
+  font-family: lato;
+  font-size: 18px;
+}
 
+.legend{
+  border: solid 1px black;
+  margin-right: 5px;
+  padding: 5px;
+  background-color: white;
+}
+
+.loptions{
+  font-size: 12px;
+  
+}
+
+.boxes{
+  width: 5px;
+  height: 5px;
+  margin-right: 5px;
+}

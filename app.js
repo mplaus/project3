@@ -1,4 +1,49 @@
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
+//ajax call for json data
+d3.json("salary_data.json", function(error, data) {
+  if (error) throw error;
+ 
+      		
+
+//reads data as a number    
+    data.forEach(function(d) {
+        for(var i in d) {
+            d[i] = Number(d[i].replace(/[^0-9\.]+/g,""));
+            if (i === "year") {
+                var tmp = new Date();
+                d[i] = tmp.setYear(d[i]);
+            }
+        }
+    });
+    
+     
+     var menuThing = document.getElementById("menuSelector");
+    
+     $( "#menuSelector" ).ready(function() {
+      menuSelect(this.value);
+      generateGraph();
+    });
+     
+    $( "#menuSelector" ).change(function() {
+      d3.select("svg").remove();
+      menuSelect(this.value);
+      generateGraph();
+    });
+    
+    
+    function menuSelect(value) {
+        
+  
+    //menuThing.selectedIndex will return the current selected index of the options
+    
+    console.log( menuThing.options[menuThing.selectedIndex].value);
+    console.log(menuSelector);
+    
+
+  
+   }
+   
+ function generateGraph() {
+  var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -56,65 +101,10 @@ svg.append("rect")
     .attr("width", "93%")
     .attr("height", "90%")
     .attr("fill", "white");
-    
-
-    
-    
-
-//ajax call for json data
-d3.json("salary_data.json", function(error, data) {
-  if (error) throw error;
- 
-      		
-
-//reads data as a number    
-    data.forEach(function(d) {
-        for(var i in d) {
-            d[i] = Number(d[i].replace(/[^0-9\.]+/g,""));
-            if (i === "year") {
-                var tmp = new Date();
-                d[i] = tmp.setYear(d[i]);
-            }
-        }
-    });
-    
-     
-     var menuThing = document.getElementById("menuSelector");
-    
-     $( "#menuSelector" ).ready(function() {
-      menuSelect(this.value);
-    });
-     
-    $( "#menuSelector" ).change(function() {
-      menuSelect(this.value);
-    });
-    
-    var description = function(d) {
-    
-      var content = '<h1>' + d.average_faculty + '</h1><p>Average Faculty Salary</p>';
-
-      return content;
-    }
-    
-    function menuSelect(value) {
-        
-  
-    //menuThing.selectedIndex will return the current selected index of the options
-    
-    console.log( menuThing.options[menuThing.selectedIndex].value);
-    console.log(menuSelector);
-    
+    //code
 //sets x and y axis
   x.domain(d3.extent(data, function(d) { return +d.year; }));
   y.domain(d3.extent([0, d3.max(data, function(d) { return d[menuThing.options[menuThing.selectedIndex].value];  } )]));
-  
-  generateGraph();
-  
-   }
-   
- function generateGraph() {
-    //code
-
   
 //label for x axis
   svg.append("g")
@@ -139,16 +129,6 @@ d3.json("salary_data.json", function(error, data) {
       .datum(data)
       .attr("class", "line")
       .attr("d", line)
-      .on('mouseover', function() {
-          d3.select(d3.event.target)
-          d3.select('.description')
-          .html( description() );
-        })
-        .on("mouseout", function() {
-          d3.select(d3.event.target)
-            .attr('stroke-width', '1.5px')
-            .attr("stroke", "steelblue");
-        });
   
   svg.append("path")      // Add the line2 path.
         .attr("class", "line")

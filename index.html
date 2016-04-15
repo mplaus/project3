@@ -7,17 +7,29 @@
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
             <script src="https://d3js.org/d3.v3.min.js" charset="utf-9"></script>
-            <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
             
             
         </head>
         <body>
             <div class="container">
                 <div class="row">
-                    <h3>Comparison of UNC Employee Salary vs. Tuition rates</h3>
+                    <div class="col-md-10">
+                        <h3>UNC Employee Salary vs. Tuition rates</h3>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="logo" src="images/logo.png"/>
+                    </div>
                 </div>
                 <div class="row">
-                     <div class="col-md-5">
+                    <div class="col-md-10"
+                        <p class="info">This graph compares how the salaries of faculty members, upper level administrators, and the price of tuition at UNC chapel Hill has changed over time.</p>
+                        <p class="info">The data, drawn from the university's HR department, includes the salary of the athletic director, average faculty salary and median faculty salary, and in-state and out of state tuition going back to the year 2000.</p>
+                        <p class="info">The select series dropdown bar allows you to view the the whole chart, the change between faculty salary and tuition, or simply the change in tuition.</p>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                     <div class="col-md-4">
                         <p id="menu" class="menuchoice">Select series:
                             <select id="menuSelector" class="form-control input-sm">
                                 <option value="athletic_director">View All</option>
@@ -26,13 +38,22 @@
                             </select>
                         </p>
                      </div>
-                     <div class="col-md-7"></div>
+                     <div class="col-md-5"></div>
                 </div>
                 <div class="row">
-                    <div class="graph"></div>
-                </div>
-                <div class="row">
-                    <div class="description"></div>
+                    <div class="col-md-10">
+                        <div class="graph"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="legend">
+                            <div>Legend:</div>
+                            <div class="loptions"><span class="boxes" style="border: solid 1px red"></span>Athletic Director Salary</div>
+                            <div class="loptions"><span class="boxes" style="border: solid 1px steelblue"></span>Average Faculty Salary</div>
+                            <div class="loptions"><span class="boxes" style="border: solid 1px black"></span>Median Facutly Salary</div>
+                            <div class="loptions"><span class="boxes" style="border: solid 1px green"></span>Out-of-state Tuition</div>
+                            <div class="loptions"><span class="boxes" style="border: solid 1px blue"></span>In-state Tuitions</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
