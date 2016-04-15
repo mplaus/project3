@@ -15,16 +15,25 @@
             <div class="container">
                 <div class="row">
                     <h3>Comparison of UNC Employee Salary vs. Tuition rates</h3>
-                    
-                    <p id="menu" class="menuchoice">Select series:
-                        <select id="menuSelector">
-                            <option value="athletic_director">View All</option>
-                            <option value="average_faculty">View Faculty Salaries</option>
-                            <option value="out_state_tuition">View Tuition</option>
-                        </select>
-                    </p>
                 </div>
-                <div class="graph"></div>
+                <div class="row">
+                     <div class="col-md-5">
+                        <p id="menu" class="menuchoice">Select series:
+                            <select id="menuSelector" class="form-control input-sm">
+                                <option value="athletic_director">View All</option>
+                                <option value="average_faculty">View Faculty Salaries</option>
+                                <option value="out_state_tuition">View Tuition</option>
+                            </select>
+                        </p>
+                     </div>
+                     <div class="col-md-7"></div>
+                </div>
+                <div class="row">
+                    <div class="graph"></div>
+                </div>
+                <div class="row">
+                    <div class="description"></div>
+                </div>
             </div>
             
             <script src="app.js"></script>

@@ -78,21 +78,27 @@ d3.json("salary_data.json", function(error, data) {
         }
     });
     
-    var tip = d3.tip()
-      .attr('class', 'd3-tip')
-      .offset([-10, 0])
-      .html(function(d) {
-      return "<strong>Out of State Tuition:</strong> <span style='color:red'>" + data.out_state_tuition + "</span>";
-  })
+     
+     var menuThing = document.getElementById("menuSelector");
     
-    var menuThing = document.getElementById("menuSelector");
+     $( "#menuSelector" ).ready(function() {
+      menuSelect(this.value);
+    });
+     
+    $( "#menuSelector" ).change(function() {
+      menuSelect(this.value);
+    });
     
-    function menuSelect(value) {
-        for (i in menuThing) {
-          
-        }
+    var description = function(d) {
+    
+      var content = '<h1>' + d.average_faculty + '</h1><p>Average Faculty Salary</p>';
+
+      return content;
     }
     
+    function menuSelect(value) {
+        
+  
     //menuThing.selectedIndex will return the current selected index of the options
     
     console.log( menuThing.options[menuThing.selectedIndex].value);
@@ -101,13 +107,13 @@ d3.json("salary_data.json", function(error, data) {
 //sets x and y axis
   x.domain(d3.extent(data, function(d) { return +d.year; }));
   y.domain(d3.extent([0, d3.max(data, function(d) { return d[menuThing.options[menuThing.selectedIndex].value];  } )]));
-        /*for (i in menuThing) {
-            if (i === menuThing.options) {
-                console.log(i);
-            return  d[menuThing.options[menuThing.selectedIndex].value];
-            }
-        };
-      } )]));*/
+  
+  generateGraph();
+  
+   }
+   
+ function generateGraph() {
+    //code
 
   
 //label for x axis
@@ -115,13 +121,7 @@ d3.json("salary_data.json", function(error, data) {
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
-      .append("text")
-      .attr("transform", "rotate(0)")
-      .attr("x", 900)
-      .attr("dx", ".71em")
-    //  .atrr("y", 10)
-      .style("text-anchor", "end")
-      .text("Year");
+      
       
 //label for y axis
   svg.append("g")
@@ -139,6 +139,16 @@ d3.json("salary_data.json", function(error, data) {
       .datum(data)
       .attr("class", "line")
       .attr("d", line)
+      .on('mouseover', function() {
+          d3.select(d3.event.target)
+          d3.select('.description')
+          .html( description() );
+        })
+        .on("mouseout", function() {
+          d3.select(d3.event.target)
+            .attr('stroke-width', '1.5px')
+            .attr("stroke", "steelblue");
+        });
   
   svg.append("path")      // Add the line2 path.
         .attr("class", "line")
@@ -210,7 +220,7 @@ d3.json("salary_data.json", function(error, data) {
             .attr("dy", ".35em")
             .style("fill", "gray");
       
-        svg.append("rect")
+        /*svg.append("rect")
             .attr("class", "overlay")
             .attr("width", width)
             .attr("height", height)
@@ -223,10 +233,12 @@ d3.json("salary_data.json", function(error, data) {
               i = bisectDate(data, x0, 1),
               d0 = data[i - 1],
               d1 = data[i],
-              d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+              d = x0 - d0.year > d1.year - x0 ? d1 : d0;
           focus.attr("transform", "translate(" + x(d.year) + "," + y(d.out_state_tuition) + ")");
           focus.select("text").text(d.out_state_tuition);
-  }
+  }*/
+  
+}
     
 });
 
