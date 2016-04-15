@@ -1,22 +1,30 @@
 <!DOCTYPE html>
     <html>
         <head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
             <link rel="stylesheet" type="text/css" href="style.css" />
-            <script src="https://d3js.org/d3.v3.min.js" charset="utf-9"></script>
+            <!-- Latest compiled and minified JavaScript -->
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+            <script src="https://d3js.org/d3.v3.min.js" charset="utf-9"></script>
+            
             
         </head>
         <body>
-            <h3>D3 Ajax Request</h3>
-            
-            <p id="menu" class="menuchoice">Select series:
-                <select id="menuSelector">
-                    <option value="athletic_director">View All</option>
-                    <option value="average_faculty">View Faculty Salaries</option>
-                    <option value="out_state_tuition">View Tuition</option>
-                </select>
-            </p>
-            <div class="container"></div>
+            <div class="container">
+                <div class="row">
+                    <h3>D3 Ajax Request</h3>
+                    
+                    <p id="menu" class="menuchoice">Select series:
+                        <select id="menuSelector">
+                            <option value="athletic_director">View All</option>
+                            <option value="average_faculty">View Faculty Salaries</option>
+                            <option value="out_state_tuition">View Tuition</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="graph"></div>
+            </div>
             
             <script src="app.js"></script>
         </body>

@@ -19,15 +19,24 @@
     display: none;
 }
 */
+body{
+  background-color: #7BAFD4;
+}
+.container {
+  background-color: #C1D0DB;
+  padding-left: 40px;
+}
 text {
-  font: 10px sans-serif;
+  font: 13px sans-serif;
 }
 
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #4A5054;
+  stroke-width: 3px;
   shape-rendering: crispEdges;
+  
 }
 
 .x.axis path {
@@ -45,6 +54,14 @@ text {
     stroke-width: 3px;
     stroke:black;
     
+}
+
+.tick line{
+    opacity: 0.2;
+  }
+
+circle {
+  opacity: 0.5;
 }
 
 

@@ -16,7 +16,8 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left");
+    .orient("left")
+    .innerTickSize(-width);
 
 var line = d3.svg.line()
     .x(function(d) { return x(d.year); })
@@ -41,38 +42,27 @@ var line5 = d3.svg.line()
  //Menu selection
     
 //setting margins
-var svg = d3.select(".container").append("svg")
+var svg = d3.select(".graph").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-/*    
-//menu change graph
-var menu = d3.select("#menu select")
-    .on("change", change);
-    */
+
+//set graph backgoround color   
+svg.append("rect")
+    .attr("width", "93%")
+    .attr("height", "90%")
+    .attr("fill", "white");
+    
+
+    
+    
 
 //ajax call for json data
 d3.json("salary_data.json", function(error, data) {
   if (error) throw error;
-/*  
-function change() {
-  d3.transition()
-      .duration(altKey ? 7500 : 1500)
-      .each(redraw);
-}
-
-// change values of path and then the circles to those of the new series
-    thegraphUpdate.select("path")
-    	.attr("d", function(d, i) {       
-      
-      		//must be a better place to put this, but this works for now
-      		lastvalues[i]=d.values[d.values.length-1].value;         
-        	lastvalues.sort(function (a,b){return b-a});
-      		legendscale.domain(lastvalues);
-      	
-      		return line(d.values); });
-      		*/
+ 
+      		
 
 //reads data as a number    
     data.forEach(function(d) {
@@ -87,6 +77,12 @@ function change() {
     
     var menuThing = document.getElementById("menuSelector");
     
+    function menuSelect(value) {
+        for (i in menuThing) {
+          
+        }
+    }
+    
     //menuThing.selectedIndex will return the current selected index of the options
     
     console.log( menuThing.options[menuThing.selectedIndex].value);
@@ -94,7 +90,7 @@ function change() {
     
 //sets x and y axis
   x.domain(d3.extent(data, function(d) { return +d.year; }));
-  y.domain(d3.extent([0, d3.max(data, function(d) { d[$( "menuSelector option:selected" ).text()];  } )]));
+  y.domain(d3.extent([0, d3.max(data, function(d) { return d[menuThing.options[menuThing.selectedIndex].value];  } )]));
         /*for (i in menuThing) {
             if (i === menuThing.options) {
                 console.log(i);
@@ -113,6 +109,7 @@ function change() {
       .attr("transform", "rotate(0)")
       .attr("x", 900)
       .attr("dx", ".71em")
+    //  .atrr("y", 10)
       .style("text-anchor", "end")
       .text("Year");
       
@@ -126,7 +123,33 @@ function change() {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Price ($)");
-
+      /*
+      // Vertical grid
+      svg.append("g")
+        .insert("g", ".line")         
+        .attr("class", "grid vertical")
+        .attr("transform", "translate(0," + (height-margin.top-margin.bottom)  + ")")
+        .call(d3.svg.axis().scale(xAxis)
+            .orient("bottom")
+            .tickSize(-(height-margin.top-margin.bottom), 0, 0)
+            .tickFormat("")
+        );
+        
+        svg.append("g")
+        .select(".x.axis.zero")
+        .attr("transform", "translate(0," + Y0() + ")")
+        .call(xAxis.tickFormat("").tickSize(0));
+        
+      // Horizontal grid
+      svg.append("g")
+        .insert("g", ".line")         
+        .attr("class", "grid horizontal")
+        .call(d3.svg.axis().scale(yAxis)
+            .orient("left")
+            .tickSize(-(height-margin.top-margin.bottom), 0, 0)
+            .tickFormat("")
+    );
+*/
 //path for first line graph
   svg.append("path")
       .datum(data)
@@ -152,6 +175,42 @@ function change() {
         .attr("class", "line")
         .style("stroke", "green")
         .attr("d", line5(data));
+        
+  // Add the scatterplot
+    svg.selectAll("dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.year); })
+        .attr("cy", function(d) { return y(d.athletic_director); });
+        
+    svg.selectAll("dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.year); })
+        .attr("cy", function(d) { return y(d.average_faculty); });
+        
+    svg.selectAll("dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.year); })
+        .attr("cy", function(d) { return y(d.median_faculty); });
+        
+    svg.selectAll("dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.year); })
+        .attr("cy", function(d) { return y(d.in_state_tuition); });
+        
+    svg.selectAll("dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.year); })
+        .attr("cy", function(d) { return y(d.out_state_tuition); });
 });
 
 
